@@ -11,6 +11,7 @@
     <modules>
         <module>zuulservice</module>
         <module>eurekaservice</module>
+        <module>simpleservice</module>
     </modules>
 
 
