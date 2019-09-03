@@ -7,7 +7,7 @@ import org.springframework.metrics.export.prometheus.EnablePrometheusMetrics;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnablePrometheusMetrics
+//@EnablePrometheusMetrics
 public class SimpleServiceApplication {
 
     public static void main(String[] args) {

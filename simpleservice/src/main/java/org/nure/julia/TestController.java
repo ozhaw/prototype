@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Timed
+//@Timed
 @RestController
 @RequestMapping("/api/simple")
 public class TestController {
