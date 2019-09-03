@@ -13,6 +13,8 @@
         <module>eurekaservice</module>
         <module>simpleservice</module>
         <module>hystrix</module>
+        <module>common</module>
+        <module>authentication</module>
     </modules>
 
 

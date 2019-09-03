@@ -28,6 +28,11 @@ public class GatewayApplication {
                                         .setFallbackUri("forward:/fallback/error")))
                         .uri("lb://SIMPLE-SERVICE")
                         .id("simple-service"))
+                .route(r -> r.path("/auth/**")
+                        .filters(f -> f.hystrix(c -> c.setName("default")
+                                .setFallbackUri("forward:/fallback/error")))
+                        .uri("lb://AUTHENTICATION-SERVICE")
+                        .id("auth-service"))
                 .build();
     }
 
