@@ -1,5 +1,6 @@
 package org.nure.julia.service.spi;
 
+import org.nure.julia.model.Claim;
 import org.nure.julia.model.Session;
 import org.nure.julia.repository.SessionRepository;
 import org.nure.julia.service.SessionService;
@@ -33,22 +34,23 @@ public class SessionManagementService implements SessionService {
 
 
     @Override
-    public Session addSession() {
+    public Session addSession(Claim claim) {
         LOGGER.info("Creating new Session");
 
-        Session session = new Session(tokenService.requestToken(), LIFE_TIME * minutes);
-        sessionRepository.save(session);
-        return session;
+        claim.setSession(new Session(tokenService.requestToken(), LIFE_TIME * minutes));
+        sessionRepository.save(claim);
+
+        return claim.getSession();
     }
 
     @Override
     public boolean isSessionActive(String token) {
         LOGGER.info("Checking session activity");
 
-        Optional<Session> session = getSession(token);
-        if (session.isPresent() && !isSessionExpired(session.get())) {
+        Optional<Claim> session = getSession(token);
+        if (session.isPresent() && !isSessionExpired(session.get().getSession())) {
             return true;
-        } else if (session.isPresent() && isSessionExpired(session.get())) {
+        } else if (session.isPresent() && isSessionExpired(session.get().getSession())) {
             dismissSession(token);
         }
         return false;
@@ -58,13 +60,17 @@ public class SessionManagementService implements SessionService {
     public Session revokeSession(String token) {
         LOGGER.info("Updating session");
 
-        dismissSession(token);
-        return addSession();
+        Optional<Claim> session = getSession(token);
+        if (session.isPresent()) {
+            dismissSession(token);
+            return addSession(session.get());
+        }
+        return null;
     }
 
     @Override
     public boolean dismissSession(String token) {
-        Optional<Session> session = getSession(token);
+        Optional<Claim> session = getSession(token);
         if (session.isPresent()) {
             sessionRepository.delete(session.get());
             return true;
@@ -72,11 +78,16 @@ public class SessionManagementService implements SessionService {
         return false;
     }
 
+    @Override
+    public Claim getClaim(String token) {
+        return getSession(token).orElse(null);
+    }
+
     private boolean isSessionExpired(Session session) {
         return session.getExpirationDate().compareTo(new Date()) < 0;
     }
 
-    private Optional<Session> getSession(String token) {
+    private Optional<Claim> getSession(String token) {
         return sessionRepository.findById(token);
     }
 

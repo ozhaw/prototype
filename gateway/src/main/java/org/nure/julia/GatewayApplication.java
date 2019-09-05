@@ -3,7 +3,6 @@ package org.nure.julia;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -25,14 +24,14 @@ public class GatewayApplication {
         return builder.routes()
                 .route(r -> r.path("/api/simple/**")
                         .filters(f -> f.hystrix(c -> c.setName("default")
-                                        .setFallbackUri("forward:/fallback/error")))
+                                .setFallbackUri("forward:/fallback/error")))
                         .uri("lb://SIMPLE-SERVICE")
                         .id("simple-service"))
                 .route(r -> r.path("/auth/**")
                         .filters(f -> f.hystrix(c -> c.setName("default")
                                 .setFallbackUri("forward:/fallback/error")))
                         .uri("lb://AUTHENTICATION-SERVICE")
-                        .id("auth-service"))
+                        .id("authentication-service"))
                 .build();
     }
 

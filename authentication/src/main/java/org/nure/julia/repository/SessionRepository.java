@@ -1,6 +1,7 @@
 package org.nure.julia.repository;
 
 import com.hazelcast.core.HazelcastInstance;
+import org.nure.julia.model.Claim;
 import org.nure.julia.model.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,23 +25,23 @@ public class SessionRepository {
         this.hazelcastInstance = hazelcastInstance;
     }
 
-    public void save(Session session) {
+    public void save(Claim claim) {
         try {
-            getContext().put(session.getToken(), writeSession(session));
+            getContext().put(claim.getSession().getToken(), writeSession(claim));
         } catch (IOException e) {
             LOGGER.error("Unable to save a session", e);
         }
     }
 
-    public void delete(Session session) {
+    public void delete(Claim claim) {
         try {
-            getContext().remove(session.getToken(), writeSession(session));
+            getContext().remove(claim.getSession().getToken(), writeSession(claim));
         } catch (IOException e) {
             LOGGER.error("Unable to delete a session", e);
         }
     }
 
-    public Optional<Session> findById(String id) {
+    public Optional<Claim> findById(String id) {
         if (getContext().containsKey(id)) {
             try {
                 return Optional.of(readSession(getContext().get(id)));
@@ -55,15 +56,15 @@ public class SessionRepository {
         return hazelcastInstance.getMap("sessionsDB");
     }
 
-    private Session readSession(String s) throws IOException, ClassNotFoundException {
+    private Claim readSession(String s) throws IOException, ClassNotFoundException {
         byte[] data = Base64.getDecoder().decode(s);
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
         Object o = ois.readObject();
         ois.close();
-        return (Session) o;
+        return (Claim) o;
     }
 
-    private String writeSession(Session o) throws IOException {
+    private String writeSession(Claim o) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(o);
