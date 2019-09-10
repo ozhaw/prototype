@@ -1,18 +1,22 @@
 package org.nure.julia;
 
-import io.micrometer.core.annotation.Timed;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@Timed
 @RestController
 @RequestMapping("/api/simple")
-public class TestController {
+public class TestController implements ITestController {
 
-    @GetMapping("/status/check")
-    public String status() {
-        return "Working";
+    @HystrixCommand(fallbackMethod = "fallback")
+    public ResponseEntity status() {
+        return ResponseEntity.ok("Working");
+    }
+
+
+    private ResponseEntity fallback() {
+        return this.defaultFallback();
     }
 
 }

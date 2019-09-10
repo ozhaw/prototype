@@ -12,7 +12,7 @@ public class AuthenticationConfigurerAdapter extends WebSecurityConfigurerAdapte
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .antMatcher("/auth")
+                .antMatcher("/api/auth")
                     .addFilterBefore(new AuthorizationTokenFilter(), BasicAuthenticationFilter.class);
     }
 

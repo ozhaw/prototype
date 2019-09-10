@@ -12,9 +12,10 @@
         <module>gateway</module>
         <module>eurekaservice</module>
         <module>simpleservice</module>
-        <module>hystrix</module>
         <module>authentication</module>
         <module>swagger</module>
+        <module>hystrix-configuration</module>
+        <module>hystrix-dashboard</module>
     </modules>
 
 
