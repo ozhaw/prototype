@@ -1,0 +1,23 @@
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8010/eureka
+management:
+    endpoints:
+        web:
+            exposure:
+                include: info, health, hystrix.stream
+server:
+    port: 8099
+spring:
+    application:
+        name: hystrix-dashboard
+turbine:
+    appConfig: simple-service,authentication-service
+    clusterNameExpression: new String("default")
+swagger:
+  services:
+    exclude: hystrix-dashboard, gateway-service
+  config:
+    refreshrate: 5000
+

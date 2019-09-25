@@ -2,11 +2,10 @@ package org.nure.julia;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 public class GatewayApplication {
@@ -25,11 +24,6 @@ public class GatewayApplication {
                         .uri("lb://AUTHENTICATION-SERVICE")
                         .id("authentication-service"))
                 .build();
-    }
-
-    @Bean
-    KeyResolver userKeyResolver() {
-        return exchange -> Mono.just("fero");
     }
 
 }
