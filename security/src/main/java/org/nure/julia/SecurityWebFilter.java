@@ -102,6 +102,7 @@ public class SecurityWebFilter extends OncePerRequestFilter {
             this.customHeaders.put(name, value);
         }
 
+        @Override
         public String getHeader(String name) {
             String headerValue = customHeaders.get(name);
 
@@ -112,6 +113,7 @@ public class SecurityWebFilter extends OncePerRequestFilter {
             return ((HttpServletRequest) getRequest()).getHeader(name);
         }
 
+        @Override
         public Enumeration<String> getHeaderNames() {
             Set<String> set = new HashSet<>(customHeaders.keySet());
 

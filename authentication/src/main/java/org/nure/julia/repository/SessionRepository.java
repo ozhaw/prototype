@@ -2,7 +2,6 @@ package org.nure.julia.repository;
 
 import com.hazelcast.core.HazelcastInstance;
 import org.nure.julia.model.Claim;
-import org.nure.julia.model.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

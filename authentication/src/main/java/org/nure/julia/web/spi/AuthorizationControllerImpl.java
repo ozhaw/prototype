@@ -50,10 +50,12 @@ public class AuthorizationControllerImpl implements AuthorizationController {
 
     }
 
+    @SuppressWarnings("unchecked")
     private ResponseEntity fallback(String f) {
         return this.defaultFallback();
     }
 
+    @SuppressWarnings("unchecked")
     private ResponseEntity fallback(Claim f) {
         return this.defaultFallback();
     }
