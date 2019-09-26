@@ -18,7 +18,7 @@ import java.util.Set;
 @Component
 public class ServiceDescriptionUpdater {
 
-    private static final String DEFAULT_SWAGGER_URL = "/api/v2/api-docs";
+    private static final String DEFAULT_SWAGGER_URL = "/v2/api-docs";
     private static final String KEY_SWAGGER_URL = "swagger_url";
 
     private final DiscoveryClient discoveryClient;

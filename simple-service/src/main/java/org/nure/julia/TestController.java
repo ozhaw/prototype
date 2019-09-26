@@ -16,10 +16,10 @@ import javax.jms.JMSException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/simple")
+@RequestMapping("/api/simple")
 public class TestController implements ITestController {
 
-    @Value("${spring.application.name}")
+    @Value("${spring.application.name}.outbound")
     private String topic;
 
     private final JmsTemplate jmsTemplate;
@@ -35,7 +35,7 @@ public class TestController implements ITestController {
         return ResponseEntity.ok("Working");
     }
 
-    @JmsListener(destination = "${spring.application.name}")
+    @JmsListener(destination = "${spring.application.name}.inbound")
     public void abc(final Message message) throws JMSException {
         Optional<String> m = ListenerTemplate.receiveText(message);
         m.isPresent();

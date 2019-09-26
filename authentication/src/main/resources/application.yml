@@ -4,8 +4,6 @@ eureka:
             defaultZone: http://localhost:8010/eureka
 server:
     port: 8012
-    servlet:
-      context-path: /api
 sessions:
     security:
         tokenKey: Bearer

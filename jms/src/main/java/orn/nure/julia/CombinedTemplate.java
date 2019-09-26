@@ -11,6 +11,8 @@ import java.util.function.Function;
 
 public final class CombinedTemplate {
 
+    private CombinedTemplate() {}
+
     public static <T extends Serializable, R extends Serializable> Optional<R> receiveObjectAndSend(final Message message, Function<T, R> f)
             throws JMSException {
 

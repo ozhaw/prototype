@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public final class ListenerTemplate {
 
+    private ListenerTemplate() {}
+
     public static <T extends Serializable> Optional<T> receiveObject(final Message message) throws JMSException {
         return message instanceof ObjectMessage
             ? Optional.ofNullable((T)((ObjectMessage) message).getObject())
