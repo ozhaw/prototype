@@ -3,6 +3,7 @@ package org.nure.julia.web.spi;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.nure.julia.model.Claim;
+import org.nure.julia.model.Session;
 import org.nure.julia.service.spi.SessionManagementService;
 import org.nure.julia.web.AuthorizationController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,17 @@ public class AuthorizationControllerImpl implements AuthorizationController {
                 : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    public ResponseEntity revokeSession(@RequestHeader("Authorization") String token) {
+    @Override
+    public ResponseEntity verify(String token) {
         return sessionService.isSessionActive(token.split(StringUtils.SPACE)[1])
-                ? ResponseEntity.ok(sessionService.revokeSession(token.split(StringUtils.SPACE)[1]))
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    public ResponseEntity revokeSession(@RequestHeader("Authorization") String token) {
+        Session session = sessionService.revokeSession(token.split(StringUtils.SPACE)[1]);
+        return session != null
+                ? ResponseEntity.ok(session)
                 : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

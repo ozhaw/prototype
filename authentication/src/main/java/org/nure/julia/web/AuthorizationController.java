@@ -15,6 +15,9 @@ public interface AuthorizationController extends HystrixFallbackController {
     @GetMapping
     ResponseEntity getClaim(@RequestHeader("Authorization") String token);
 
+    @GetMapping("/verify")
+    ResponseEntity verify(@RequestHeader("Authorization") String token);
+
     @PatchMapping
     ResponseEntity revokeSession(@RequestHeader("Authorization") String token);
 
