@@ -13,7 +13,7 @@ spring:
     application:
         name: hystrix-dashboard
 turbine:
-    appConfig: simple-service,authentication-service
+    appConfig: user-service,authentication-service
     clusterNameExpression: new String("default")
 swagger:
   services:

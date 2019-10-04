@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.nure.julia.model.Claim;
 import org.nure.julia.model.Session;
 import org.nure.julia.service.spi.SessionManagementService;
+import org.nure.julia.web.ApplicationController;
 import org.nure.julia.web.AuthorizationController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@ApplicationController
 @RequestMapping("/api/auth")
-@CrossOrigin
 public class AuthorizationControllerImpl implements AuthorizationController {
 
     private final SessionManagementService sessionService;

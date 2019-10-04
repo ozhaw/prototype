@@ -27,10 +27,10 @@ public class ServiceDefinitionsContext {
     }
 
     public List<SwaggerResource> getSwaggerDefinitions() {
-        return serviceDescriptions.entrySet().stream().map(serviceDefinition -> {
+        return serviceDescriptions.keySet().stream().map(s -> {
             SwaggerResource resource = new SwaggerResource();
-            resource.setLocation("/service/" + serviceDefinition.getKey());
-            resource.setName(serviceDefinition.getKey());
+            resource.setLocation("/service/" + s);
+            resource.setName(s);
             resource.setSwaggerVersion("2.0");
             return resource;
         }).collect(Collectors.toList());

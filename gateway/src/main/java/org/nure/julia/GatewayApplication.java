@@ -16,9 +16,9 @@ public class GatewayApplication {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/api/simple/**")
-                        .uri("lb://SIMPLE-SERVICE")
-                        .id("simple-service"))
+                .route(r -> r.path("/api/user/**")
+                        .uri("lb://USER-SERVICE")
+                        .id("user-service"))
                 .route(r -> r.path("/api/auth/**")
                         .uri("lb://AUTHENTICATION-SERVICE")
                         .id("authentication-service"))

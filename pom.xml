@@ -11,7 +11,7 @@
     <modules>
         <module>gateway</module>
         <module>eureka-service</module>
-        <module>simple-service</module>
+        <module>user-service</module>
         <module>authentication</module>
         <module>swagger</module>
         <module>hystrix-configuration</module>
@@ -38,6 +38,5 @@
             <version>2.3.0</version>
         </dependency>
     </dependencies>
-
 
 </project>

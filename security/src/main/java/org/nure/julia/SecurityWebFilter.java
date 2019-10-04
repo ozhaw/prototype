@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Component
+@PropertySource("classpath:application-security.properties")
 public class SecurityWebFilter extends OncePerRequestFilter {
 
     @Value("${default.security.context}")
@@ -36,6 +38,18 @@ public class SecurityWebFilter extends OncePerRequestFilter {
     @Autowired
     public SecurityWebFilter(DiscoveryClient discoveryClient) {
         this.discoveryClient = discoveryClient;
+    }
+
+    public String getAuthenticationServiceURL() {
+        List<ServiceInstance> gatewayInstances = discoveryClient.getInstances("gateway-service");
+        if (gatewayInstances == null || gatewayInstances.isEmpty()) {
+            List<ServiceInstance> authInstances = discoveryClient.getInstances("authentication-service");
+            return gatewayInstances == null || gatewayInstances.isEmpty()
+                    ? StringUtils.EMPTY
+                    : authInstances.get(0).getUri() + securityContextPath;
+        } else {
+            return gatewayInstances.get(0).getUri() + securityContextPath;
+        }
     }
 
     @SuppressWarnings({"NullableProblems"})
@@ -75,18 +89,6 @@ public class SecurityWebFilter extends OncePerRequestFilter {
             return Optional.empty();
         }
 
-    }
-
-    private String getAuthenticationServiceURL() {
-        List<ServiceInstance> gatewayInstances = discoveryClient.getInstances("gateway-service");
-        if (gatewayInstances == null || gatewayInstances.isEmpty()) {
-            List<ServiceInstance> authInstances = discoveryClient.getInstances("authentication-service");
-            return gatewayInstances == null || gatewayInstances.isEmpty()
-                    ? StringUtils.EMPTY
-                    : authInstances.get(0).getUri() + securityContextPath;
-        } else {
-            return gatewayInstances.get(0).getUri() + securityContextPath;
-        }
     }
 
     private final class MutableHttpServletRequest extends HttpServletRequestWrapper {

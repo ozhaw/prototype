@@ -1,7 +1,6 @@
 package org.nure.julia.dto;
 
 public class ClaimIdentityDto {
-
     private String identifier;
     private String claimKey;
 
