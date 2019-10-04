@@ -37,7 +37,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public FilterRegistrationBean securityFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+        FilterRegistrationBean<SecurityWebFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(securityWebFilter);
         registration.addUrlPatterns(protectedUrls);
         registration.setName("securityWebFilter");
