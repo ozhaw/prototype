@@ -26,11 +26,14 @@ public class AuthorizationControllerImpl implements AuthorizationController {
         this.sessionService = sessionService;
     }
 
+    @Override
     @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
     public ResponseEntity createSession(Claim claim) {
         return ResponseEntity.ok(sessionService.addSession(claim));
     }
 
+    @Override
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
     public ResponseEntity getClaim(@RequestHeader("Authorization") String token) {
         return sessionService.isSessionActive(token.split(StringUtils.SPACE)[1])
                 ? ResponseEntity.ok(sessionService.getClaim(token.split(StringUtils.SPACE)[1]))
@@ -38,12 +41,15 @@ public class AuthorizationControllerImpl implements AuthorizationController {
     }
 
     @Override
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
     public ResponseEntity verify(String token) {
         return sessionService.isSessionActive(token.split(StringUtils.SPACE)[1])
                 ? ResponseEntity.ok().build()
                 : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    @Override
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
     public ResponseEntity revokeSession(@RequestHeader("Authorization") String token) {
         Session session = sessionService.revokeSession(token.split(StringUtils.SPACE)[1]);
         return session != null
@@ -51,6 +57,8 @@ public class AuthorizationControllerImpl implements AuthorizationController {
                 : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    @Override
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
     public ResponseEntity dismissSession(@RequestHeader("Authorization") String token) {
         return sessionService.isSessionActive(token.split(StringUtils.SPACE)[1])
                 && sessionService.dismissSession(token.split(StringUtils.SPACE)[1])

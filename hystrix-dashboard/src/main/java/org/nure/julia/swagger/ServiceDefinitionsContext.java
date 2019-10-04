@@ -10,7 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
-@Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ServiceDefinitionsContext {
 
     private final ConcurrentHashMap<String, String> serviceDescriptions;
