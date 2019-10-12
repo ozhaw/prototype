@@ -1,7 +1,6 @@
 package org.nure.julia.web;
 
 import org.nure.julia.HystrixFallbackController;
-import org.nure.julia.model.Claim;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public interface AuthorizationController extends HystrixFallbackController {
 
     @PostMapping("/claim")
-    ResponseEntity createSession(@RequestBody Claim claim);
+    ResponseEntity createSession();
 
     @GetMapping
     ResponseEntity getClaim(@RequestHeader("Authorization") String token);

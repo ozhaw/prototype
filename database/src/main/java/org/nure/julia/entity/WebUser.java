@@ -1,14 +1,14 @@
-package org.nure.julia.entity.user;
+package org.nure.julia.entity;
 
-import org.nure.julia.entity.KeyClaimable;
 import org.nure.julia.security.EncryptDecryptConverter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
-@Table(name = "web_user")
+@Table(name = "webuser")
 public class WebUser implements KeyClaimable, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,9 @@ public class WebUser implements KeyClaimable, Serializable {
 
     @Column(name = "photo_url")
     private String photoUrl;
+
+    @OneToMany(mappedBy = "webUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Device> devices;
 
     public Long getId() {
         return id;
@@ -82,5 +85,13 @@ public class WebUser implements KeyClaimable, Serializable {
     @Override
     public String getClaimKey() {
         return encode(id + email + creationDate.getTime());
+    }
+
+    public Set<Device> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Set<Device> devices) {
+        this.devices = devices;
     }
 }

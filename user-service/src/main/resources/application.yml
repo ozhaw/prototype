@@ -16,4 +16,4 @@ management:
                 include: hystrix.stream
 default:
     security:
-        includes: /api/user/operations/*
+        includes: /user/api/user/operations/*

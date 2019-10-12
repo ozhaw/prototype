@@ -1,6 +1,6 @@
 package org.nure.julia.repository;
 
-import org.nure.julia.entity.user.WebUser;
+import org.nure.julia.entity.WebUser;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

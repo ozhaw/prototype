@@ -1,20 +1,18 @@
 package org.nure.julia.service.spi;
 
 import org.modelmapper.ModelMapper;
-import org.nure.julia.dto.FullUserDto;
-import org.nure.julia.dto.SessionDto;
+import org.nure.julia.dto.WebUserCredentialsDto;
 import org.nure.julia.dto.WebUserDto;
-import org.nure.julia.entity.user.WebUser;
+import org.nure.julia.entity.WebUser;
 import org.nure.julia.exceptions.MissingEmailOrPasswordException;
-import org.nure.julia.exceptions.SessionManagementException;
 import org.nure.julia.exceptions.UserEmailExistsException;
 import org.nure.julia.exceptions.UserNotFoundException;
 import org.nure.julia.repository.UserRepository;
-import org.nure.julia.service.UserAuthorizationService;
 import org.nure.julia.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 import static java.util.Objects.nonNull;
 
@@ -24,18 +22,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final UserAuthorizationService authorizationService;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, UserAuthorizationService authorizationService) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.authorizationService = authorizationService;
     }
 
     @Override
     public boolean addUser(final WebUserDto webUserDto) {
         if (!userRepository.findByEmail(webUserDto.getEmail()).isPresent()) {
             WebUser user = modelMapper.map(webUserDto, WebUser.class);
+            user.setCreationDate(new Date());
             userRepository.save(user);
 
             return nonNull(user.getId());
@@ -53,19 +50,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public FullUserDto authorizeUser(WebUserDto webUserDto) {
-        if (nonNull(webUserDto.getEmail()) && nonNull(webUserDto.getPassword())) {
-            WebUser user = userRepository.findByEmailAndPassword(webUserDto.getEmail(), webUserDto.getPassword())
+    public WebUserDto authorizeUser(WebUserCredentialsDto webUserCredentialsDto) {
+        if (nonNull(webUserCredentialsDto.getEmail()) && nonNull(webUserCredentialsDto.getPassword())) {
+            WebUser user = userRepository.findByEmailAndPassword(webUserCredentialsDto.getEmail(), webUserCredentialsDto.getPassword())
                     .orElseThrow(() -> new UserNotFoundException("User doesn`t exist"));
 
-            SessionDto sessionDto = authorizationService.registerClaim(user)
-                    .orElseThrow(() -> new SessionManagementException("Cannot register user session"));
-
-            FullUserDto fullUserDto = new FullUserDto();
-            fullUserDto.setWebUser(modelMapper.map(user, WebUserDto.class));
-            fullUserDto.setSession(sessionDto);
-
-            return fullUserDto;
+            return modelMapper.map(user, WebUserDto.class);
         } else {
             throw new MissingEmailOrPasswordException("Email or password is missing");
         }

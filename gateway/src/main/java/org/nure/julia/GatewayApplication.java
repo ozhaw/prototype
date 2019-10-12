@@ -16,12 +16,15 @@ public class GatewayApplication {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/api/user/**")
+                .route(r -> r.path("/user/api/user/**")
                         .uri("lb://USER-SERVICE")
                         .id("user-service"))
-                .route(r -> r.path("/api/auth/**")
+                .route(r -> r.path("/authentication/api/authentication/**")
                         .uri("lb://AUTHENTICATION-SERVICE")
                         .id("authentication-service"))
+                .route(r -> r.path("/device/api/device/**")
+                        .uri("lb://DEVICE-SERVICE")
+                        .id("device-service"))
                 .build();
     }
 

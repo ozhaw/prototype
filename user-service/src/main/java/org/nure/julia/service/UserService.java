@@ -1,6 +1,6 @@
 package org.nure.julia.service;
 
-import org.nure.julia.dto.FullUserDto;
+import org.nure.julia.dto.WebUserCredentialsDto;
 import org.nure.julia.dto.WebUserDto;
 
 public interface UserService {
@@ -8,5 +8,5 @@ public interface UserService {
 
     WebUserDto getUserInfo(Long userId);
 
-    FullUserDto authorizeUser(final WebUserDto webUserDto);
+    WebUserDto authorizeUser(final WebUserCredentialsDto webUserCredentialsDto);
 }

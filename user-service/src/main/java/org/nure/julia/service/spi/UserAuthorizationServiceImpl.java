@@ -1,44 +1,38 @@
 package org.nure.julia.service.spi;
 
-import org.nure.julia.SecurityWebFilter;
-import org.nure.julia.dto.ClaimIdentityDto;
-import org.nure.julia.dto.SessionDto;
-import org.nure.julia.entity.user.WebUser;
+import kong.unirest.HttpResponse;
+import kong.unirest.ObjectMapper;
+import kong.unirest.Unirest;
+import org.nure.julia.dto.UserSessionDto;
 import org.nure.julia.service.UserAuthorizationService;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Service
 public class UserAuthorizationServiceImpl implements UserAuthorizationService {
 
-    private final RestTemplate restTemplate;
-    private final SecurityWebFilter securityWebFilter;
+    private final ObjectMapper internalObjectMapper;
+    private final String authenticationServiceURL;
 
-    public UserAuthorizationServiceImpl(RestTemplate restTemplate, SecurityWebFilter securityWebFilter) {
-        this.restTemplate = restTemplate;
-        this.securityWebFilter = securityWebFilter;
+    @Autowired
+    public UserAuthorizationServiceImpl(ObjectMapper internalObjectMapper, String authenticationServiceURL) {
+        this.internalObjectMapper = internalObjectMapper;
+        this.authenticationServiceURL = authenticationServiceURL;
     }
 
     @Override
-    public Optional<SessionDto> registerClaim(WebUser webUser) {
-        ClaimIdentityDto claimIdentityDto = new ClaimIdentityDto();
-        claimIdentityDto.setClaimKey(webUser.getClaimKey());
-        claimIdentityDto.setIdentifier(String.valueOf(webUser.getId()));
+    public Optional<UserSessionDto> registerClaim() {
+        HttpResponse<UserSessionDto> response = Unirest.post(authenticationServiceURL + "/claim")
+                .header("Content-Type", "application/json")
+                .charset(StandardCharsets.UTF_8)
+                .withObjectMapper(internalObjectMapper)
+                .asObject(UserSessionDto.class);
 
-        ResponseEntity<SessionDto> response = restTemplate.exchange(
-                securityWebFilter.getAuthenticationServiceURL(),
-                HttpMethod.POST,
-                new HttpEntity<>(claimIdentityDto),
-                SessionDto.class
-        );
-
-        return response.getStatusCode() == HttpStatus.OK
+        return response.getStatus() == HttpStatus.OK.value()
                 ? Optional.ofNullable(response.getBody())
                 : Optional.empty();
     }
