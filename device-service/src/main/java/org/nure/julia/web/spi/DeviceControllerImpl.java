@@ -4,11 +4,13 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.nure.julia.web.ApplicationController;
 import org.nure.julia.web.DeviceController;
 import org.nure.julia.web.dto.DeviceDto;
+import org.nure.julia.web.exceptions.UniqueDeviceAlreadyExistsException;
 import org.nure.julia.web.service.DeviceService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,21 +30,27 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
-    public ResponseEntity addDevice(HttpServletRequest httpServletRequest, final DeviceDto deviceDto) {
-        return deviceService.addDevice(valueOf(getHeader(httpServletRequest, "ClaimIdentity")), deviceDto)
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+            UniqueDeviceAlreadyExistsException.class
+    })
+    public ResponseEntity addDevice(Long userId, final DeviceDto deviceDto) {
+        return deviceService.addDevice(userId, deviceDto)
                 ? ResponseEntity.ok().build()
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+            UniqueDeviceAlreadyExistsException.class
+    })
     public ResponseEntity<DeviceDto> getDeviceByDeviceId(String deviceId) {
         return ResponseEntity.ok(deviceService.getDeviceByDeviceId(deviceId));
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback")
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+            UniqueDeviceAlreadyExistsException.class
+    })
     public ResponseEntity<DeviceDto> getDeviceById(Long deviceId) {
         return ResponseEntity.ok(deviceService.getDeviceById(deviceId));
     }

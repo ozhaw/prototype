@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "webuser")
-public class WebUser implements KeyClaimable, Serializable {
+public class WebUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -80,11 +80,6 @@ public class WebUser implements KeyClaimable, Serializable {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
-    }
-
-    @Override
-    public String getClaimKey() {
-        return encode(id + email + creationDate.getTime());
     }
 
     public Set<Device> getDevices() {

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.nure.julia.web.WebControllerDefinitions.*;
 
-@FeignClient(name = "user-service")
+@FeignClient(name = "${spring.application.name}.UserController")
 public interface UserController extends HystrixFallbackController {
     @PostMapping
     ResponseEntity createUser(@RequestBody final WebUserDto userDto);

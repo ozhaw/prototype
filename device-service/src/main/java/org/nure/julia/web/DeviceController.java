@@ -4,19 +4,16 @@ import org.nure.julia.HystrixFallbackController;
 import org.nure.julia.web.dto.DeviceDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static org.nure.julia.web.WebControllerDefinitions.*;
 
-@FeignClient(name = "device-service")
+@FeignClient(name = "${spring.application.name}.DeviceController")
 public interface DeviceController extends HystrixFallbackController {
     @PostMapping
-    ResponseEntity addDevice(HttpServletRequest httpServletRequest, @RequestBody final DeviceDto deviceDto);
+    ResponseEntity addDevice(@SessionAttribute(name = "userId") Long userId, @RequestBody final DeviceDto deviceDto);
 
     @GetMapping(EXTERNAL_DEVICE_ID_PARAMETER_URL)
     ResponseEntity<DeviceDto> getDeviceByDeviceId(@PathVariable(name = DEVICE_ID_PARAMETER) String deviceId);
