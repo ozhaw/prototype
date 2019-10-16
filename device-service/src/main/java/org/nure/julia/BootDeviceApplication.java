@@ -16,10 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableFeignClients
 @ApplyHystrixConfiguration
-public class DeviceServiceApplication {
+public class BootDeviceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DeviceServiceApplication.class, args);
+        SpringApplication.run(BootDeviceApplication.class, args);
     }
 
     @Bean
