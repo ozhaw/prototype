@@ -1,20 +1,31 @@
 package org.nure.julia.service.spi;
 
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import org.modelmapper.ModelMapper;
-import org.nure.julia.dto.WebUserCredentialsDto;
-import org.nure.julia.dto.WebUserDto;
+import org.nure.julia.dto.*;
+import org.nure.julia.entity.Device;
+import org.nure.julia.entity.UserHealth;
 import org.nure.julia.entity.WebUser;
 import org.nure.julia.exceptions.MissingEmailOrPasswordException;
 import org.nure.julia.exceptions.UserEmailExistsException;
 import org.nure.julia.exceptions.UserNotFoundException;
+import org.nure.julia.mappings.BasicMapper;
 import org.nure.julia.repository.UserRepository;
 import org.nure.julia.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
+import static java.util.stream.Collectors.toMap;
 
 @Service
 @Transactional
@@ -22,10 +33,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final String gatewayURL;
+    private final BasicMapper<UserHealthDto, UserHealth> userHealthDtoUserHealthBasicMapper;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper,
+                           String gatewayURL, BasicMapper<UserHealthDto, UserHealth> userHealthDtoUserHealthBasicMapper) {
+
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.gatewayURL = gatewayURL;
+        this.userHealthDtoUserHealthBasicMapper = userHealthDtoUserHealthBasicMapper;
     }
 
     @Override
@@ -59,5 +76,19 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new MissingEmailOrPasswordException("Email or password is missing");
         }
+    }
+
+    @Override
+    public Map<String, List<UserHealthDto>> getUserHealthInfo(Long userId) {
+        WebUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User doesn`t exist"));
+
+        return user.getDevices()
+                .stream()
+                .collect(toMap(Device::getDeviceId, device -> device.getHealthStatuses()
+                        .stream()
+                        .map(userHealthDtoUserHealthBasicMapper::reversalMap)
+                        .collect(Collectors.toList()))
+                );
     }
 }

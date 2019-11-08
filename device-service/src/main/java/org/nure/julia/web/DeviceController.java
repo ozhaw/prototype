@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.List;
+
 import static org.nure.julia.web.WebControllerDefinitions.*;
 
 @FeignClient(name = "${spring.application.name}.DeviceController")
@@ -20,4 +22,7 @@ public interface DeviceController extends HystrixFallbackController {
 
     @GetMapping(DEVICE_ID_PARAMETER_URL)
     ResponseEntity<DeviceDto> getDeviceById(@PathVariable(name = DEVICE_ID_PARAMETER) Long deviceId);
+
+    @GetMapping(USER_DEVICES_URL)
+    ResponseEntity<List<DeviceDto>> getDevicesForUser(@PathVariable(name = USER_ID_PARAMETER) Long userId);
 }

@@ -34,8 +34,7 @@ public class SecurityWebFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         } else {
             Optional<UserSessionDto> claimIdentity = getSession(token);
-            if (claimIdentity.isPresent() &&
-                    claimIdentity.get().getValidationKey().equals(request.getSession().getAttribute("validationKey"))) {
+            if (claimIdentity.isPresent()) {
                 filterChain.doFilter(request, response);
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

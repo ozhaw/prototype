@@ -6,12 +6,16 @@ import org.nure.julia.mappings.BasicMapper;
 import org.nure.julia.repository.DeviceRepository;
 import org.nure.julia.repository.UserRepository;
 import org.nure.julia.web.dto.DeviceDto;
+import org.nure.julia.web.exceptions.DeviceNotFoundException;
 import org.nure.julia.web.exceptions.UniqueDeviceAlreadyExistsException;
+import org.nure.julia.web.exceptions.UserNotFoundException;
 import org.nure.julia.web.service.DeviceService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -49,11 +53,21 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public DeviceDto getDeviceByDeviceId(String deviceId) {
-        return null;
+        return deviceDtoDeviceBasicMapper.reversalMap(deviceRepository.findByDeviceId(deviceId)
+                .orElseThrow(() -> new DeviceNotFoundException("Device doesn`t exist")));
     }
 
     @Override
     public DeviceDto getDeviceById(Long id) {
-        return null;
+        return deviceDtoDeviceBasicMapper.reversalMap(deviceRepository.findById(id)
+                .orElseThrow(() -> new DeviceNotFoundException("Device doesn`t exist")));
+    }
+
+    @Override
+    public List<DeviceDto> getDevicesForUser(Long userId) {
+        WebUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User doesn`t exist"));
+
+        return user.getDevices().stream().map(deviceDtoDeviceBasicMapper::reversalMap).collect(Collectors.toList());
     }
 }

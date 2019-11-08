@@ -46,15 +46,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public String authenticationServiceURL() {
+        List<ServiceInstance> authInstances = discoveryClient.getInstances("authentication-service");
+        return StringUtils.defaultIfBlank(gatewayURL(), authInstances == null || authInstances.isEmpty()
+                ? StringUtils.EMPTY
+                : authInstances.get(0).getUri() + securityContextPath);
+    }
+
+    @Bean
+    public String gatewayURL() {
         List<ServiceInstance> gatewayInstances = discoveryClient.getInstances("gateway-service");
-        if (gatewayInstances == null || gatewayInstances.isEmpty()) {
-            List<ServiceInstance> authInstances = discoveryClient.getInstances("authentication-service");
-            return gatewayInstances == null || gatewayInstances.isEmpty()
-                    ? StringUtils.EMPTY
-                    : authInstances.get(0).getUri() + securityContextPath;
-        } else {
-            return gatewayInstances.get(0).getUri() + securityContextPath;
-        }
+        return gatewayInstances == null || gatewayInstances.isEmpty()
+                ? StringUtils.EMPTY
+                : gatewayInstances.get(0).getUri() + securityContextPath;
     }
 
     @Bean

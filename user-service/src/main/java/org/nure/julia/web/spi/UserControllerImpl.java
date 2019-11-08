@@ -1,6 +1,7 @@
 package org.nure.julia.web.spi;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.nure.julia.dto.UserHealthDto;
 import org.nure.julia.dto.UserSessionDto;
 import org.nure.julia.dto.WebUserCredentialsDto;
 import org.nure.julia.dto.WebUserDto;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.List;
 
 import static org.nure.julia.web.WebControllerDefinitions.BASE_URL;
 import static org.nure.julia.web.WebControllerDefinitions.USER_ID_PARAMETER;
@@ -56,7 +59,7 @@ public class UserControllerImpl implements UserController {
             UserEmailExistsException.class,
             UserNotFoundException.class
     })
-    public ResponseEntity<WebUserDto> getUserInfo(@SessionAttribute(name = USER_ID_PARAMETER) Long userId) {
+    public ResponseEntity getUserInfo(@SessionAttribute(name = USER_ID_PARAMETER) Long userId) {
         return ResponseEntity.ok(userService.getUserInfo(userId));
     }
 
@@ -67,7 +70,7 @@ public class UserControllerImpl implements UserController {
             UserEmailExistsException.class,
             UserNotFoundException.class
     })
-    public ResponseEntity<WebUserDto> authorize(HttpServletRequest request, HttpServletResponse response,
+    public ResponseEntity authorize(HttpServletRequest request, HttpServletResponse response,
                                                 WebUserCredentialsDto webUserCredentialsDto) {
 
         WebUserDto webUserDto = userService.authorizeUser(webUserCredentialsDto);
@@ -81,15 +84,26 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(webUserDto);
     }
 
+    @Override
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+            MissingEmailOrPasswordException.class,
+            SessionManagementException.class,
+            UserEmailExistsException.class,
+            UserNotFoundException.class
+    })
+    public ResponseEntity getUserHealthData(@SessionAttribute(name = USER_ID_PARAMETER) Long userId) {
+        return ResponseEntity.ok(userService.getUserHealthInfo(userId));
+    }
+
     private ResponseEntity fallback(WebUserDto userDto) {
         return this.defaultFallback();
     }
 
-    private ResponseEntity<WebUserDto> fallback(Long userId) {
+    private ResponseEntity fallback(Long userId) {
         return this.defaultFallback();
     }
 
-    private ResponseEntity<WebUserDto> fallback(HttpServletRequest request, HttpServletResponse response,
+    private ResponseEntity fallback(HttpServletRequest request, HttpServletResponse response,
                                                 WebUserCredentialsDto webUserCredentialsDto) {
         return this.defaultFallback();
     }

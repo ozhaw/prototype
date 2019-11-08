@@ -5,6 +5,7 @@ import org.nure.julia.web.ApplicationController;
 import org.nure.julia.web.DeviceController;
 import org.nure.julia.web.dto.DeviceDto;
 import org.nure.julia.web.exceptions.UniqueDeviceAlreadyExistsException;
+import org.nure.julia.web.exceptions.UserNotFoundException;
 import org.nure.julia.web.service.DeviceService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Objects;
 
 import static java.lang.Long.valueOf;
@@ -51,8 +53,17 @@ public class DeviceControllerImpl implements DeviceController {
     @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
             UniqueDeviceAlreadyExistsException.class
     })
-    public ResponseEntity<DeviceDto> getDeviceById(Long deviceId) {
+    public ResponseEntity getDeviceById(Long deviceId) {
         return ResponseEntity.ok(deviceService.getDeviceById(deviceId));
+    }
+
+    @Override
+    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+            UniqueDeviceAlreadyExistsException.class,
+            UserNotFoundException.class
+    })
+    public ResponseEntity getDevicesForUser(Long userId) {
+        return ResponseEntity.ok(deviceService.getDevicesForUser(userId));
     }
 
     private ResponseEntity fallback(HttpServletRequest httpServletRequest, DeviceDto f) {

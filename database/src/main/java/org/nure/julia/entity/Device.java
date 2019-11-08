@@ -1,10 +1,8 @@
 package org.nure.julia.entity;
 
-import org.nure.julia.misc.HealthStatus;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "device")
@@ -24,7 +22,10 @@ public class Device implements Serializable {
     private WebUser webUser;
 
     @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<HealthStatus> healthStatuses;
+    private List<UserHealth> healthStatuses;
+
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DeviceInfo> deviceInfoList;
 
     public Long getId() {
         return id;
@@ -58,11 +59,19 @@ public class Device implements Serializable {
         this.webUser = webUser;
     }
 
-    public Set<HealthStatus> getHealthStatuses() {
+    public List<UserHealth> getHealthStatuses() {
         return healthStatuses;
     }
 
-    public void setHealthStatuses(Set<HealthStatus> healthStatuses) {
+    public void setHealthStatuses(List<UserHealth> healthStatuses) {
         this.healthStatuses = healthStatuses;
+    }
+
+    public List<DeviceInfo> getDeviceInfoList() {
+        return deviceInfoList;
+    }
+
+    public void setDeviceInfoList(List<DeviceInfo> deviceInfoList) {
+        this.deviceInfoList = deviceInfoList;
     }
 }
