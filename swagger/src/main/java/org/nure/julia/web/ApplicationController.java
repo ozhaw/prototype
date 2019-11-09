@@ -11,6 +11,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @RestController
-@CrossOrigin(exposedHeaders = {"SecurityToken"})
 public @interface ApplicationController {
 }
