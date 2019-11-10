@@ -40,7 +40,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             MissingEmailOrPasswordException.class,
             SessionManagementException.class,
             UserEmailExistsException.class,
@@ -53,7 +53,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             MissingEmailOrPasswordException.class,
             SessionManagementException.class,
             UserEmailExistsException.class,
@@ -64,7 +64,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             MissingEmailOrPasswordException.class,
             SessionManagementException.class,
             UserEmailExistsException.class,
@@ -85,7 +85,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             MissingEmailOrPasswordException.class,
             SessionManagementException.class,
             UserEmailExistsException.class,
