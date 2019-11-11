@@ -15,7 +15,7 @@ import static org.nure.julia.web.WebControllerDefinitions.*;
 @FeignClient(name = "${spring.application.name}.DeviceController")
 public interface DeviceController extends HystrixFallbackController {
     @PostMapping
-    ResponseEntity addDevice(@SessionAttribute(name = "userId") Long userId, @RequestBody final DeviceDto deviceDto);
+    ResponseEntity addDevice(@RequestHeader(name = "userId") Long userId, @RequestBody final DeviceDto deviceDto);
 
     @GetMapping(EXTERNAL_DEVICE_ID_PARAMETER_URL)
     ResponseEntity<DeviceDto> getDeviceByDeviceId(@PathVariable(name = DEVICE_ID_PARAMETER) String deviceId);

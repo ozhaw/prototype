@@ -16,6 +16,7 @@ import org.nure.julia.web.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -59,8 +60,19 @@ public class UserControllerImpl implements UserController {
             UserEmailExistsException.class,
             UserNotFoundException.class
     })
-    public ResponseEntity getUserInfo(@SessionAttribute(name = USER_ID_PARAMETER) Long userId) {
+    public ResponseEntity getUserInfo(Long userId) {
         return ResponseEntity.ok(userService.getUserInfo(userId));
+    }
+
+    @Override
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
+            MissingEmailOrPasswordException.class,
+            SessionManagementException.class,
+            UserEmailExistsException.class,
+            UserNotFoundException.class
+    })
+    public ResponseEntity<WebUserDto> updateUserInfo(Long userId, WebUserDto userDto) {
+        return ResponseEntity.ok(userService.updateUserInfo(userDto, userId));
     }
 
     @Override
@@ -77,8 +89,7 @@ public class UserControllerImpl implements UserController {
         UserSessionDto userSessionDto = authorizationService.registerClaim()
                 .orElseThrow(() -> new SessionManagementException("Cannot register session"));
 
-        request.getSession().setAttribute("validationKey", userSessionDto.getValidationKey());
-        request.getSession().setAttribute("userId", webUserDto.getId());
+        response.addHeader("userId", String.valueOf(webUserDto.getId()));
         response.addHeader("SecurityToken", userSessionDto.getToken());
 
         return ResponseEntity.ok(webUserDto);
@@ -91,7 +102,7 @@ public class UserControllerImpl implements UserController {
             UserEmailExistsException.class,
             UserNotFoundException.class
     })
-    public ResponseEntity getUserHealthData(@SessionAttribute(name = USER_ID_PARAMETER) Long userId) {
+    public ResponseEntity getUserHealthData(Long userId) {
         return ResponseEntity.ok(userService.getUserHealthInfo(userId));
     }
 
@@ -100,6 +111,10 @@ public class UserControllerImpl implements UserController {
     }
 
     private ResponseEntity fallback(Long userId) {
+        return this.defaultFallback();
+    }
+
+    private ResponseEntity<WebUserDto> fallback(Long userId, WebUserDto userDto) {
         return this.defaultFallback();
     }
 

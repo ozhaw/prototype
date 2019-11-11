@@ -23,12 +23,16 @@ public interface UserController extends HystrixFallbackController {
     ResponseEntity createUser(@RequestBody final WebUserDto userDto);
 
     @GetMapping(USER_WITH_USER_ID_PARAMETER_URL)
-    ResponseEntity<WebUserDto> getUserInfo(Long userId);
+    ResponseEntity<WebUserDto> getUserInfo(@RequestHeader(name = USER_ID_PARAMETER) Long userId);
+
+    @PatchMapping(USER_WITH_USER_ID_PARAMETER_URL)
+    ResponseEntity<WebUserDto> updateUserInfo(@RequestHeader(name = USER_ID_PARAMETER) Long userId,
+                                              @RequestBody final WebUserDto userDto);
 
     @PostMapping(USER_AUTHORIZATION_URL)
     ResponseEntity<WebUserDto> authorize(HttpServletRequest request, HttpServletResponse response,
                                          @RequestBody WebUserCredentialsDto webUserCredentialsDto);
 
     @GetMapping(USER_HEALTH_URL)
-    ResponseEntity<Map<String, List<UserHealthDto>>> getUserHealthData(Long userId);
+    ResponseEntity<Map<String, List<UserHealthDto>>> getUserHealthData(@RequestHeader(name = USER_ID_PARAMETER) Long userId);
 }

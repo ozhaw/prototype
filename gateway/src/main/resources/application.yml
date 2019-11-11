@@ -16,7 +16,9 @@ spring:
                 allowed-methods: "*"
                 allowed-headers: "*"
                 allow-credentials: true
-                exposed-headers: "SecurityToken"
+                exposed-headers:
+                  - "SecurityToken"
+                  - "userId"
           discovery:
               locator:
                   enabled: true

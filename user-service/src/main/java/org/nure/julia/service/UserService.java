@@ -11,6 +11,8 @@ import java.util.Map;
 public interface UserService {
     boolean addUser(final WebUserDto webUserDto);
 
+    WebUserDto updateUserInfo(final WebUserDto webUserDto, Long userId);
+
     WebUserDto getUserInfo(Long userId);
 
     WebUserDto authorizeUser(final WebUserCredentialsDto webUserCredentialsDto);

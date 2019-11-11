@@ -32,7 +32,7 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             UniqueDeviceAlreadyExistsException.class
     })
     public ResponseEntity addDevice(Long userId, final DeviceDto deviceDto) {
@@ -42,7 +42,7 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             UniqueDeviceAlreadyExistsException.class
     })
     public ResponseEntity<DeviceDto> getDeviceByDeviceId(String deviceId) {
@@ -50,7 +50,7 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             UniqueDeviceAlreadyExistsException.class
     })
     public ResponseEntity getDeviceById(Long deviceId) {
@@ -58,7 +58,7 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "default", fallbackMethod = "fallback", ignoreExceptions = {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             UniqueDeviceAlreadyExistsException.class,
             UserNotFoundException.class
     })

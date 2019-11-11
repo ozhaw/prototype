@@ -1,9 +1,9 @@
 package org.nure.julia.service.spi;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
 import org.modelmapper.ModelMapper;
-import org.nure.julia.dto.*;
+import org.nure.julia.dto.UserHealthDto;
+import org.nure.julia.dto.WebUserCredentialsDto;
+import org.nure.julia.dto.WebUserDto;
 import org.nure.julia.entity.Device;
 import org.nure.julia.entity.UserHealth;
 import org.nure.julia.entity.WebUser;
@@ -13,15 +13,12 @@ import org.nure.julia.exceptions.UserNotFoundException;
 import org.nure.julia.mappings.BasicMapper;
 import org.nure.julia.repository.UserRepository;
 import org.nure.julia.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -56,6 +53,22 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserEmailExistsException("User`s email is already in use");
         }
+    }
+
+    @Override
+    public WebUserDto updateUserInfo(WebUserDto webUserDto, Long userId) {
+        WebUser user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User doesn`t exist"));
+
+        if (nonNull(webUserDto.getPhotoUrl()) ) {
+            user.setPhotoUrl(webUserDto.getPhotoUrl());
+        }
+
+        if (nonNull(webUserDto.getUsername()) ) {
+            user.setUsername(webUserDto.getUsername());
+        }
+
+        return modelMapper.map(userRepository.save(user), WebUserDto.class);
     }
 
     @Override
