@@ -37,7 +37,7 @@ public class AuthorizationControllerImpl implements AuthorizationController {
         return sessionStatus == SessionStatus.ACTIVE
                 ? ResponseEntity.ok(sessionService.getClaim(token.split(StringUtils.SPACE)[1]))
                 : sessionStatus == SessionStatus.EXPIRED
-                    ? ResponseEntity.status(HttpStatus.UPGRADE_REQUIRED).build()
+                    ? revokeSession(token)
                     : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 

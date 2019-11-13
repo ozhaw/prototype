@@ -40,6 +40,7 @@ public class DeviceMapper implements BasicMapper<DeviceDto, Device> {
             protected void configure() {
                 map().setDeviceId(source.getDeviceId());
                 map().setType(source.getType());
+                map().setId(source.getId());
             }
         });
     }

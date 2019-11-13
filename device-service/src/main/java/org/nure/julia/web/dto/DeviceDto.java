@@ -1,6 +1,7 @@
 package org.nure.julia.web.dto;
 
 public class DeviceDto {
+    private Long id;
     private String deviceId;
     private String type;
 
@@ -18,5 +19,13 @@ public class DeviceDto {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

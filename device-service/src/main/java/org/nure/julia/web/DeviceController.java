@@ -18,11 +18,14 @@ public interface DeviceController extends HystrixFallbackController {
     ResponseEntity addDevice(@RequestHeader(name = "userId") Long userId, @RequestBody final DeviceDto deviceDto);
 
     @GetMapping(EXTERNAL_DEVICE_ID_PARAMETER_URL)
-    ResponseEntity<DeviceDto> getDeviceByDeviceId(@PathVariable(name = DEVICE_ID_PARAMETER) String deviceId);
+    ResponseEntity getDeviceByDeviceId(@PathVariable(name = DEVICE_ID_PARAMETER) String deviceId);
 
     @GetMapping(DEVICE_ID_PARAMETER_URL)
-    ResponseEntity<DeviceDto> getDeviceById(@PathVariable(name = DEVICE_ID_PARAMETER) Long deviceId);
+    ResponseEntity getDeviceById(@PathVariable(name = DEVICE_ID_PARAMETER) Long deviceId);
+
+    @GetMapping(DEVICE_INFO_DATA_URL)
+    ResponseEntity getDeviceInfoForDevice(@PathVariable(name = DEVICE_ID_PARAMETER) Long deviceId);
 
     @GetMapping(USER_DEVICES_URL)
-    ResponseEntity<List<DeviceDto>> getDevicesForUser(@PathVariable(name = USER_ID_PARAMETER) Long userId);
+    ResponseEntity getDevicesForUser(@PathVariable(name = USER_ID_PARAMETER) Long userId);
 }
