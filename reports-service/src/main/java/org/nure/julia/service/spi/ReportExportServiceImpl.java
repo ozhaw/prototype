@@ -6,13 +6,11 @@ import org.nure.julia.service.ReportExportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.supercsv.io.CsvBeanWriter;
-import org.supercsv.io.ICsvBeanWriter;
-import org.supercsv.prefs.CsvPreference;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportExportServiceImpl implements ReportExportService {
@@ -29,16 +27,13 @@ public class ReportExportServiceImpl implements ReportExportService {
                 csvFileName);
         response.setHeader(headerKey, headerValue);
 
-        try (ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE)) {
-            csvWriter.writeHeader(reportExportDto.getHeaders());
-
-            reportExportDto.getData().forEach(stack -> stack.forEach(item -> {
-                try {
-                    csvWriter.write(item, reportExportDto.getHeaders());
-                } catch (IOException e) {
-                    LOGGER.error("Unable to write data");
-                }
-            }));
+        try {
+            String sb = String.join(",", reportExportDto.getHeaders()) +
+                    System.lineSeparator() +
+                    reportExportDto.getData().stream()
+                            .map(stack -> String.join(",", stack))
+                            .collect(Collectors.joining(System.lineSeparator()));
+            response.getWriter().print(sb);
         } catch (IOException e) {
             LOGGER.error("Unable to get Response writer", e);
             throw new CSVExportException("Cannot export to CSV file", e);
