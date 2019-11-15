@@ -1,4 +1,4 @@
-package org.nure.julia.web.dto;
+package org.nure.julia.dto;
 
 public class DeviceDto {
     private Long id;

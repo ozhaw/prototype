@@ -1,18 +1,14 @@
-package org.nure.julia.web.mappings;
+package org.nure.julia.mappings;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.nure.julia.entity.DeviceInfo;
-import org.nure.julia.mappings.BasicMapper;
-import org.nure.julia.misc.DeviceStatus;
-import org.nure.julia.web.dto.DeviceInfoDto;
+import org.nure.julia.dto.DeviceInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-
-import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 @Component
 public class DeviceInfoMapper implements BasicMapper<DeviceInfoDto, DeviceInfo> {

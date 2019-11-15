@@ -1,4 +1,4 @@
-package org.nure.julia.web.exceptions;
+package org.nure.julia.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
 

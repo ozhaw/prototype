@@ -25,6 +25,9 @@ public class BootGatewayApplication {
                 .route(r -> r.path("/device/api/device/**")
                         .uri("lb://DEVICE-SERVICE")
                         .id("device-service"))
+                .route(r -> r.path("/reports/api/reports/**")
+                        .uri("lb://REPORTS-SERVICE")
+                        .id("reports-service"))
                 .build();
     }
 

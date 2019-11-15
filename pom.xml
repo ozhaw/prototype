@@ -20,6 +20,7 @@
         <module>jms</module>
         <module>security</module>
         <module>device-service</module>
+        <module>reports-service</module>
     </modules>
 
     <dependencies>

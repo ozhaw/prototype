@@ -1,4 +1,4 @@
-package org.nure.julia.web.dto;
+package org.nure.julia.dto;
 
 import org.nure.julia.misc.DeviceStatus;
 

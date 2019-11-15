@@ -1,11 +1,11 @@
-package org.nure.julia.web.service.spi;
+package org.nure.julia.service.spi;
 
 import org.nure.julia.entity.DeviceInfo;
 import org.nure.julia.mappings.BasicMapper;
 import org.nure.julia.repository.DeviceRepository;
-import org.nure.julia.web.dto.DeviceInfoDto;
-import org.nure.julia.web.exceptions.DeviceNotFoundException;
-import org.nure.julia.web.service.DeviceInfoService;
+import org.nure.julia.dto.DeviceInfoDto;
+import org.nure.julia.exceptions.DeviceNotFoundException;
+import org.nure.julia.service.DeviceInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

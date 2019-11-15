@@ -1,6 +1,6 @@
-package org.nure.julia.web.service;
+package org.nure.julia.service;
 
-import org.nure.julia.web.dto.DeviceDto;
+import org.nure.julia.dto.DeviceDto;
 
 import java.util.List;
 
