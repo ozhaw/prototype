@@ -36,7 +36,7 @@ public class SessionManagementService implements SessionService {
     public Session addSession() {
         LOGGER.info("Creating new Session");
 
-        Session session = new Session(tokenService.requestToken(), LIFE_TIME * minutes);
+        Session session = new Session(tokenService.requestToken(), LIFE_TIME * 300);
         sessionRepository.save(session);
 
         return session;
