@@ -71,7 +71,7 @@ public class UserControllerImpl implements UserController {
             UserEmailExistsException.class,
             UserNotFoundException.class
     })
-    public ResponseEntity<WebUserDto> updateUserInfo(Long userId, WebUserDto userDto) {
+    public ResponseEntity updateUserInfo(Long userId, WebUserDto userDto) {
         return ResponseEntity.ok(userService.updateUserInfo(userDto, userId));
     }
 
@@ -106,6 +106,17 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(userService.getUserHealthInfo(userId));
     }
 
+    @Override
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
+            MissingEmailOrPasswordException.class,
+            SessionManagementException.class,
+            UserEmailExistsException.class,
+            UserNotFoundException.class
+    })
+    public ResponseEntity getUserHealthDataByDeviceId(Long userId, String deviceId) {
+        return null;
+    }
+
     private ResponseEntity fallback(WebUserDto userDto) {
         return this.defaultFallback();
     }
@@ -114,12 +125,16 @@ public class UserControllerImpl implements UserController {
         return this.defaultFallback();
     }
 
-    private ResponseEntity<WebUserDto> fallback(Long userId, WebUserDto userDto) {
+    private ResponseEntity fallback(Long userId, WebUserDto userDto) {
         return this.defaultFallback();
     }
 
     private ResponseEntity fallback(HttpServletRequest request, HttpServletResponse response,
                                                 WebUserCredentialsDto webUserCredentialsDto) {
+        return this.defaultFallback();
+    }
+
+    private ResponseEntity fallback(Long userId, String deviceId) {
         return this.defaultFallback();
     }
 }

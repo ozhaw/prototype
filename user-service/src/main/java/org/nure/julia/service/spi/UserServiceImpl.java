@@ -27,7 +27,6 @@ import static java.util.stream.Collectors.toMap;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final String gatewayURL;
@@ -103,5 +102,10 @@ public class UserServiceImpl implements UserService {
                         .map(userHealthDtoUserHealthBasicMapper::reversalMap)
                         .collect(Collectors.toList()))
                 );
+    }
+
+    @Override
+    public List<UserHealthDto> getUserHealthInfoByDeviceId(Long userId, String deviceId) {
+        return getUserHealthInfo(userId).get(deviceId);
     }
 }

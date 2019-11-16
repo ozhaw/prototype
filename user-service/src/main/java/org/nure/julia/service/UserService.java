@@ -18,4 +18,6 @@ public interface UserService {
     WebUserDto authorizeUser(final WebUserCredentialsDto webUserCredentialsDto);
 
     Map<String, List<UserHealthDto>> getUserHealthInfo(Long userId);
+
+   List<UserHealthDto> getUserHealthInfoByDeviceId(Long userId, String deviceId);
 }
