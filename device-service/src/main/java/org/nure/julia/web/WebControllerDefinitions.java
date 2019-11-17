@@ -10,6 +10,8 @@ public final class WebControllerDefinitions {
     public static final String DEVICE_ID_PARAMETER_URL = "/{" + DEVICE_ID_PARAMETER + "}";
     public static final String EXTERNAL_DEVICE_ID_PARAMETER_URL = "/external/{" + DEVICE_ID_PARAMETER + "}";
 
+    public static final String INFO_DATA_URL = "/info";
+
     public static final String DEVICE_HEALTH_DATA_URL = DEVICE_ID_PARAMETER_URL + "/health";
     public static final String DEVICE_INFO_DATA_URL = DEVICE_ID_PARAMETER_URL + "/info";
 

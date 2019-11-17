@@ -22,6 +22,9 @@ public interface DeviceController extends HystrixFallbackController {
     @GetMapping(DEVICE_INFO_DATA_URL)
     ResponseEntity getDeviceInfoForDevice(@PathVariable(name = DEVICE_ID_PARAMETER) Long deviceId);
 
+    @GetMapping(INFO_DATA_URL)
+    ResponseEntity getDeviceInfo(@RequestHeader(name = "userId") Long userId);
+
     @GetMapping(USER_DEVICES_URL)
     ResponseEntity getDevicesForUser(@PathVariable(name = USER_ID_PARAMETER) Long userId);
 }

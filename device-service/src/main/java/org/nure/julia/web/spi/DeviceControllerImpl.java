@@ -68,6 +68,15 @@ public class DeviceControllerImpl implements DeviceController {
     @Override
     @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
             UniqueDeviceAlreadyExistsException.class,
+            DeviceNotFoundException.class
+    })
+    public ResponseEntity getDeviceInfo(Long userId) {
+        return ResponseEntity.ok(deviceInfoService.getDeviceInfo(userId));
+    }
+
+    @Override
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
+            UniqueDeviceAlreadyExistsException.class,
             UserNotFoundException.class
     })
     public ResponseEntity getDevicesForUser(Long userId) {
