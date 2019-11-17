@@ -21,6 +21,7 @@ public class ReportExportServiceImpl implements ReportExportService {
         String csvFileName = String.format("%s-%s.csv", reportExportDto.getTitle(), new Date().toString());
 
         response.setContentType("text/csv");
+        response.setHeader("FileName", csvFileName);
 
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"",

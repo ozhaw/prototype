@@ -19,6 +19,7 @@ spring:
                 exposed-headers:
                   - "SecurityToken"
                   - "userId"
+                  - "FileName"
           discovery:
               locator:
                   enabled: true
