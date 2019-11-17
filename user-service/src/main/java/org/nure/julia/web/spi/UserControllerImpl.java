@@ -114,7 +114,7 @@ public class UserControllerImpl implements UserController {
             UserNotFoundException.class
     })
     public ResponseEntity getUserHealthDataByDeviceId(Long userId, String deviceId) {
-        return null;
+        return ResponseEntity.ok(userService.getUserHealthInfoByDeviceId(userId, deviceId));
     }
 
     private ResponseEntity fallback(WebUserDto userDto) {
