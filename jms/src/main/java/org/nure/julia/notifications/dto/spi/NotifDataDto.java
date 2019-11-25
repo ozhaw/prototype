@@ -1,6 +1,6 @@
-package orn.nure.julia.notifications.dto.spi;
+package org.nure.julia.notifications.dto.spi;
 
-import orn.nure.julia.notifications.dto.Mappable;
+import org.nure.julia.notifications.dto.Mappable;
 
 public class NotifDataDto implements Mappable {
     private String time;

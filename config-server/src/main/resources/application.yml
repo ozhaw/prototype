@@ -1,6 +1,23 @@
+server:
+  port: 8888
+
 spring:
+  application:
+    name: config-server
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/spring-cloud-samples/config-repo
+          uri: https://github.com/ozhaw/rest-config.git
+          username: ozhaw
+          password: FnrU15dA
+          clone-on-start: true
+  security:
+    user:
+      name: admin
+      password: iluvcki
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka

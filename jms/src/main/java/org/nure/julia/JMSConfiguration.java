@@ -1,4 +1,4 @@
-package orn.nure.julia;
+package org.nure.julia;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
