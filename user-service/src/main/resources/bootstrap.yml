@@ -1,10 +1,10 @@
 spring:
     cloud:
         config:
-            uri: http://localhost:8888
+            uri: https://julia-config-server.herokuapp.com
             username: admin
             password: iluvcki
-            name: user-service,database,jms,security
+            name: database-config,jms-config,security-config,hystrix-config,user-service
     application:
         name: user-service
     resources:

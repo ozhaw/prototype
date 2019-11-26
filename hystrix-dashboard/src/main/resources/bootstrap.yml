@@ -1,7 +1,7 @@
 spring:
     cloud:
       config:
-        uri: http://localhost:8888
+        uri: https://julia-config-server.herokuapp.com
         username: admin
         password: iluvcki
         name: hystrix-dashboard
