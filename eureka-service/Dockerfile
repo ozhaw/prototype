@@ -1,8 +1,9 @@
 FROM openjdk:8-jdk-alpine
 
+VOLUME /tmp
+
 ARG JAR_FILE
 
-RUN mkdir -p /apps
-COPY ./target/${JAR_FILE} /apps/app.jar
+COPY ./target/${JAR_FILE} app.jar
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-XX:+UnlockExperimentalVMOptions","-XX:+UseCGroupMemoryLimitForHeap","-Xmx256m","-Xss512k","-XX:MetaspaceSize=100m","-jar","/apps/app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-XX:+UnlockExperimentalVMOptions","-XX:+UseCGroupMemoryLimitForHeap","-Xmx256m","-Xss512k","-XX:MetaspaceSize=100m","-jar","/app.jar"]

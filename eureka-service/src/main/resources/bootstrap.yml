@@ -8,4 +8,4 @@ spring:
         name: eureka-service
 
 server:
-    port: ${PORT:8080}
+    port: 8080
