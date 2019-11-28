@@ -1,9 +1,9 @@
 spring:
   cloud:
     config:
-      uri: https://julia-config-server.herokuapp.com
+      uri: http://localhost:8888
       username: admin
       password: iluvcki
-      name: gateway-config
-  application:
-    name: gateway-service
+      name: gateway
+    application:
+      name: gateway-service
