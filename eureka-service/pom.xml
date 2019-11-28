@@ -12,24 +12,6 @@
     <artifactId>eureka-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <profiles>
-        <profile>
-            <id>docker</id>
-            <properties>
-                <image.name>ozhaw/eureka</image.name>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>heroku</id>
-            <properties>
-                <image.name>registry.heroku.com/julia-eureka-service/web</image.name>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-        </profile>
-    </profiles>
-
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
@@ -115,7 +97,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>${image.name}</repository>
+                    <repository>registry.heroku.com/julia-eureka-service/web</repository>
                     <tag>latest</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
