@@ -1,4 +1,4 @@
-package org.nure.julia.notifications.dto.spi;
+package orn.nure.julia.notifications.dto.spi;
 
 import com.google.common.collect.ImmutableMap;
 

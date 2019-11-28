@@ -1,4 +1,4 @@
-package org.nure.julia.notifications.dto;
+package orn.nure.julia.notifications.dto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

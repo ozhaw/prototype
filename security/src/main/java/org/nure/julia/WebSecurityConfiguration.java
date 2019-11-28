@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import java.util.List;
 
 @EnableWebSecurity
+@PropertySource({"classpath:application-security.properties"})
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Value("${default.security.includes}")

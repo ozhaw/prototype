@@ -1,4 +1,4 @@
-package org.nure.julia;
+package orn.nure.julia;
 
 import org.apache.activemq.Message;
 
