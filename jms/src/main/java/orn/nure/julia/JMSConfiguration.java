@@ -1,67 +1,17 @@
 package orn.nure.julia;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.activemq.broker.BrokerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
-import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
-import org.springframework.jms.support.converter.MessageType;
-
 
 @Configuration
-@EnableJms
-@PropertySource("classpath:application-jms.properties")
 public class JMSConfiguration {
 
-    @Value("${spring.activemq.broker-url}")
-    private String brokerUrl;
-
-    @Value("${spring.activemq.user}")
-    private String user;
-
-    @Value("${spring.activemq.password}")
-    private String password;
-
     @Bean
-    @Scope("singleton")
-    public ActiveMQConnectionFactory connectionFactory() {
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
-        connectionFactory.setBrokerURL(brokerUrl);
-        connectionFactory.setPassword(user);
-        connectionFactory.setUserName(password);
-        return connectionFactory;
-    }
-
-    @Bean
-    @Scope("singleton")
-    public JmsTemplate jmsTemplate() {
-        JmsTemplate template = new JmsTemplate();
-        template.setConnectionFactory(connectionFactory());
-        return template;
-    }
-
-    @Bean
-    @Scope("singleton")
-    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory());
-        factory.setConcurrency("1-1");
-        return factory;
-    }
-
-    @Bean
-    @Scope("singleton")
-    public MessageConverter jacksonJmsMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
-        return converter;
+    public BrokerService broker() throws Exception {
+        BrokerService broker = new BrokerService();
+        broker.addConnector("tcp://localhost:61616");
+        return broker;
     }
 
 }
