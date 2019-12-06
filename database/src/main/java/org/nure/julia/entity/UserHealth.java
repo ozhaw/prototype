@@ -1,5 +1,6 @@
 package org.nure.julia.entity;
 
+import org.nure.julia.misc.DeviceStatus;
 import org.nure.julia.misc.HealthStatus;
 
 import javax.persistence.*;
@@ -23,6 +24,13 @@ public class UserHealth {
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
     private Device device;
+
+    public UserHealth() { }
+
+    public UserHealth(HealthStatus healthStatus, Date auditDate) {
+        this.healthStatus = healthStatus;
+        this.auditDate = auditDate;
+    }
 
     public Date getAuditDate() {
         return auditDate;

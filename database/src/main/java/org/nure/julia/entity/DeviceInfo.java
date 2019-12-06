@@ -24,6 +24,13 @@ public class DeviceInfo {
     @JoinColumn(name = "device_id", nullable = false, updatable = false)
     private Device device;
 
+    public DeviceInfo() { }
+
+    public DeviceInfo(DeviceStatus deviceStatus, Date auditDate) {
+        this.deviceStatus = deviceStatus;
+        this.auditDate = auditDate;
+    }
+
     public Date getAuditDate() {
         return auditDate;
     }

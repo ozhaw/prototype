@@ -1,5 +1,6 @@
-package orn.nure.julia;
+package org.nure.julia;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.broker.BrokerService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,11 @@ public class JMSConfiguration {
         BrokerService broker = new BrokerService();
         broker.addConnector("tcp://localhost:61616");
         return broker;
+    }
+
+    @Bean
+    public ObjectMapper mapper() {
+        return new ObjectMapper();
     }
 
 }
