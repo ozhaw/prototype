@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Service
 public class TokenEncryptService implements TokenService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenEncryptService.class);
     private static final Random RANDOM = new Random();
 

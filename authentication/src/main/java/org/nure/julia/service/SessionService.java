@@ -4,7 +4,6 @@ import org.nure.julia.model.Session;
 import org.nure.julia.model.SessionStatus;
 
 public interface SessionService {
-
     Session addSession();
 
     SessionStatus getSessionStatus(String token);
@@ -14,5 +13,4 @@ public interface SessionService {
     boolean dismissSession(String token);
 
     Session getClaim(String token);
-
 }

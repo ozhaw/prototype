@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Service
 public class SessionManagementService implements SessionService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SessionManagementService.class);
     private static final long LIFE_TIME = 60000;
 

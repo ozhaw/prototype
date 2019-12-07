@@ -53,8 +53,8 @@ public class SecurityWebFilter extends OncePerRequestFilter {
             return response.getStatusCode() == HttpStatus.OK
                     ? Optional.ofNullable(response.getBody())
                     : response.getStatusCode() == HttpStatus.UPGRADE_REQUIRED
-                        ? revokeSession(token)
-                        : Optional.empty();
+                    ? revokeSession(token)
+                    : Optional.empty();
         } catch (RestClientException e) {
             return Optional.empty();
         }

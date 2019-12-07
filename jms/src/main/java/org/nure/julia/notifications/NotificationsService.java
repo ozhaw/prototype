@@ -2,10 +2,10 @@ package org.nure.julia.notifications;
 
 import com.google.common.collect.ImmutableMap;
 import com.pusher.pushnotifications.PushNotifications;
+import org.nure.julia.notifications.dto.spi.FCMDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.nure.julia.notifications.dto.spi.FCMDto;
 
 import java.util.Arrays;
 import java.util.List;

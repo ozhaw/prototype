@@ -1,14 +1,14 @@
 package org.nure.julia.service.spi;
 
+import org.nure.julia.dto.DeviceDto;
 import org.nure.julia.entity.Device;
 import org.nure.julia.entity.WebUser;
-import org.nure.julia.mappings.BasicMapper;
-import org.nure.julia.repository.DeviceRepository;
-import org.nure.julia.repository.UserRepository;
-import org.nure.julia.dto.DeviceDto;
 import org.nure.julia.exceptions.DeviceNotFoundException;
 import org.nure.julia.exceptions.UniqueDeviceAlreadyExistsException;
 import org.nure.julia.exceptions.UserNotFoundException;
+import org.nure.julia.mappings.BasicMapper;
+import org.nure.julia.repository.DeviceRepository;
+import org.nure.julia.repository.UserRepository;
 import org.nure.julia.service.DeviceService;
 import org.springframework.stereotype.Service;
 

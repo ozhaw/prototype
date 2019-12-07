@@ -3,8 +3,8 @@ package org.nure.julia.mappings;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
-import org.nure.julia.entity.Device;
 import org.nure.julia.dto.DeviceDto;
+import org.nure.julia.entity.Device;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

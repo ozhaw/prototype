@@ -59,11 +59,11 @@ public class UserServiceImpl implements UserService {
         WebUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User doesn`t exist"));
 
-        if (nonNull(webUserDto.getPhotoUrl()) ) {
+        if (nonNull(webUserDto.getPhotoUrl())) {
             user.setPhotoUrl(webUserDto.getPhotoUrl());
         }
 
-        if (nonNull(webUserDto.getUsername()) ) {
+        if (nonNull(webUserDto.getUsername())) {
             user.setUsername(webUserDto.getUsername());
         }
 

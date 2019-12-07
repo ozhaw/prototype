@@ -13,5 +13,6 @@ public final class WebControllerDefinitions {
     public static final String USER_HEALTH_URL = "/health";
     public static final String USER_HEALTH_DEVICE_ID_URL = "/device/{" + DEVICE_ID_PARAMETER + "}/health";
 
-    private WebControllerDefinitions() {}
+    private WebControllerDefinitions() {
+    }
 }

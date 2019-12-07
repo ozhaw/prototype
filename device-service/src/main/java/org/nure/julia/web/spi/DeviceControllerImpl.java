@@ -1,22 +1,20 @@
 package org.nure.julia.web.spi;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import org.nure.julia.web.ApplicationController;
-import org.nure.julia.web.DeviceController;
 import org.nure.julia.dto.DeviceDto;
 import org.nure.julia.exceptions.DeviceNotFoundException;
 import org.nure.julia.exceptions.UniqueDeviceAlreadyExistsException;
 import org.nure.julia.exceptions.UserNotFoundException;
 import org.nure.julia.service.DeviceInfoService;
 import org.nure.julia.service.DeviceService;
+import org.nure.julia.web.ApplicationController;
+import org.nure.julia.web.DeviceController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static java.lang.Long.valueOf;
-import static java.util.Objects.requireNonNull;
 import static org.nure.julia.web.WebControllerDefinitions.BASE_URL;
 
 @ApplicationController
