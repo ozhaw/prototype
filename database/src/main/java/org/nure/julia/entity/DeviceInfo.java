@@ -21,14 +21,16 @@ public class DeviceInfo {
     private Date auditDate;
 
     @ManyToOne
-    @JoinColumn(name = "device_id", nullable = false, updatable = false)
+    @JoinColumn(name = "device_id", nullable = false)
     private Device device;
 
-    public DeviceInfo() { }
+    public DeviceInfo() {
+    }
 
-    public DeviceInfo(DeviceStatus deviceStatus, Date auditDate) {
+    public DeviceInfo(DeviceStatus deviceStatus, Date auditDate, Device device) {
         this.deviceStatus = deviceStatus;
         this.auditDate = auditDate;
+        this.device = device;
     }
 
     public Date getAuditDate() {

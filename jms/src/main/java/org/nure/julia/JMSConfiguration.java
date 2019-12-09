@@ -13,6 +13,7 @@ public class JMSConfiguration {
         BrokerService broker = new BrokerService();
         broker.addConnector("tcp://localhost:61616");
         broker.setPersistent(false);
+        broker.setUseJmx(true);
         return broker;
     }
 
