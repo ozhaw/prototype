@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 
 @Component
@@ -27,6 +28,7 @@ public class JMSReceiver {
     }
 
     @JmsListener(destination = "app.device")
+    @Transactional
     public void receiveDeviceData(String deviceData) {
         try {
             final DeviceInfoDto deviceInfoDto = mapper.readValue(deviceData, DeviceInfoDto.class);
@@ -43,6 +45,7 @@ public class JMSReceiver {
     }
 
     @JmsListener(destination = "app.health")
+    @Transactional
     public void receiveHealthData(String healthData) {
         try {
             final HealthInfoDto healthInfoDto = mapper.readValue(healthData, HealthInfoDto.class);
