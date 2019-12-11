@@ -1,0 +1,13 @@
+eureka:
+  server:
+    enableSelfPreservation: false
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+    serviceUrl:
+      defaultZone: https://julia-eureka-service.herokuapp.com/eureka
+server:
+  port: ${PORT:8080}
+spring:
+  application:
+    name: eureka-service

@@ -1,0 +1,25 @@
+---
+spring:
+  profiles: peer
+  application:
+    name: authentication-service
+    resources:
+      add-mappings: true
+eureka:
+  instance:
+    hostname: julia-auth.herokuapp.com
+  client:
+    serviceUrl:
+      defaultZone: https://julia-eureka-service.herokuapp.com/eureka
+server:
+  port: ${PORT:8080}
+sessions:
+  security:
+    tokenKey: Bearer
+    tokenLifeTime: 30
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
