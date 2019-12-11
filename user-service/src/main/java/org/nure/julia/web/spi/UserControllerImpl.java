@@ -70,12 +70,6 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
-            MissingEmailOrPasswordException.class,
-            SessionManagementException.class,
-            UserEmailExistsException.class,
-            UserNotFoundException.class
-    })
     public ResponseEntity authorize(HttpServletRequest request, HttpServletResponse response,
                                     WebUserCredentialsDto webUserCredentialsDto) {
 

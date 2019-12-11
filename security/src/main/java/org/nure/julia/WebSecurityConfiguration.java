@@ -26,6 +26,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${default.security.context}")
     private String securityContextPath;
 
+    @Value("${default.gateway.url}")
+    private String gatewayURL;
+
     private final DiscoveryClient discoveryClient;
 
     @Autowired
