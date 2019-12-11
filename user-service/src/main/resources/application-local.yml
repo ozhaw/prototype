@@ -13,7 +13,7 @@ management:
     endpoints:
         web:
             exposure:
-                include: hystrix.stream
+                include: hystrix.stream, info, health
 default:
     security:
         includes: /user/api/user/operations/*

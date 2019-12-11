@@ -1,0 +1,9 @@
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    secure-port: 443
+    statusPageUrl: https://${DOMAIN_NAME}/actuator/info
+    healthCheckUrl: https://${DOMAIN_NAME}/actuator/health
+    homePageUrl: https://${DOMAIN_NAME}/

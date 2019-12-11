@@ -1,7 +1,5 @@
 FROM openjdk:8-jdk-alpine
 
-ARG JAR_FILE
+COPY ./target/user-service-1.0-SNAPSHOT.jar app.jar
 
-COPY ./target/${JAR_FILE} app.jar
-
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=deploy,heroku","-Xms256m", "-Xmx512m", "-jar","app.jar"]

@@ -1,5 +1,6 @@
 package org.nure.julia.web.spi;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.nure.julia.model.Session;
 import org.nure.julia.model.SessionStatus;
@@ -12,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static org.nure.julia.web.WebControllerDefinitions.BASE_URL;
+
 @ApplicationController
-@RequestMapping("/authentication/api/authentication")
+@RequestMapping(BASE_URL)
 public class AuthorizationControllerImpl implements AuthorizationController {
 
     private final SessionManagementService sessionService;
@@ -24,12 +27,14 @@ public class AuthorizationControllerImpl implements AuthorizationController {
     }
 
     @Override
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback")
     public ResponseEntity createSession() {
         return ResponseEntity.ok(sessionService.addSession());
     }
 
     @Override
-    public ResponseEntity getClaim(@RequestHeader("Authorization") String token) {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback")
+    public ResponseEntity getClaim(String token) {
         SessionStatus sessionStatus = sessionService.getSessionStatus(token.split(StringUtils.SPACE)[1]);
         return sessionStatus == SessionStatus.ACTIVE
                 ? ResponseEntity.ok(sessionService.getClaim(token.split(StringUtils.SPACE)[1]))
@@ -39,6 +44,7 @@ public class AuthorizationControllerImpl implements AuthorizationController {
     }
 
     @Override
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback")
     public ResponseEntity verify(String token) {
         SessionStatus sessionStatus = sessionService.getSessionStatus(token.split(StringUtils.SPACE)[1]);
         return sessionStatus == SessionStatus.ACTIVE
@@ -49,7 +55,8 @@ public class AuthorizationControllerImpl implements AuthorizationController {
     }
 
     @Override
-    public ResponseEntity revokeSession(@RequestHeader("Authorization") String token) {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback")
+    public ResponseEntity revokeSession(String token) {
         Session session = sessionService.revokeSession(token.split(StringUtils.SPACE)[1]);
         return session != null
                 ? ResponseEntity.ok(session)
@@ -57,7 +64,8 @@ public class AuthorizationControllerImpl implements AuthorizationController {
     }
 
     @Override
-    public ResponseEntity dismissSession(@RequestHeader("Authorization") String token) {
+    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback")
+    public ResponseEntity dismissSession(String token) {
         SessionStatus sessionStatus = sessionService.getSessionStatus(token.split(StringUtils.SPACE)[1]);
         return (sessionStatus == SessionStatus.ACTIVE || sessionStatus == SessionStatus.EXPIRED)
                 && sessionService.dismissSession(token.split(StringUtils.SPACE)[1])

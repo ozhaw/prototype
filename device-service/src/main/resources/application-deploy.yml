@@ -1,20 +1,20 @@
-spring:
-  application:
-    name: authentication-service
-    resources:
-      add-mappings: true
 eureka:
   client:
     serviceUrl:
       defaultZone: https://julia-eureka-service.herokuapp.com/eureka
 server:
   port: ${PORT:8080}
-sessions:
-  security:
-    tokenKey: Bearer
-    tokenLifeTime: 30
+spring:
+  application:
+    name: device-service
+  resources:
+    add-mappings: true
 management:
   endpoints:
     web:
       exposure:
         include: hystrix.stream, info, health
+default:
+  security:
+    includes: /device/api/device/*
+
