@@ -1,5 +1,7 @@
 package org.nure.julia.notifications.dto.spi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 
 import java.text.SimpleDateFormat;
@@ -31,8 +33,9 @@ public class FCMDto {
         this.notification = notification;
     }
 
-    public Map<String, Map<String, String>> toMap() {
-        return ImmutableMap.of("notification", notification.toMap(), "data", data.toMap());
+    public Map<String, Map<String, String>> toMap() throws JsonProcessingException {
+        return ImmutableMap.of("notification", notification.toMap(), "data",
+                ImmutableMap.of("info", new ObjectMapper().writeValueAsString(data.toMap())));
     }
 
     public static NotificationBuilder builder() {
@@ -73,6 +76,11 @@ public class FCMDto {
 
         public NotificationBuilder setBody(String body) {
             this.fcmDto.getNotification().setBody(body);
+            return this;
+        }
+
+        public NotificationBuilder setType(String type) {
+            this.fcmDto.getData().setType(type);
             return this;
         }
 

@@ -54,6 +54,7 @@ public class NotificationsService {
                 .setSeverity(notificationRequestDto.getSeverity())
                 .setBody(notificationRequestDto.getBody())
                 .setTitle(notificationRequestDto.getTitle())
+                .setType(notificationRequestDto.getType())
                 .build();
 
         notify(fcmDto, user.getEmail());

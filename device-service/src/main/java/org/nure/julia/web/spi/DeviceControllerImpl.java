@@ -29,18 +29,13 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     @Override
-    @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
-            UniqueDeviceAlreadyExistsException.class
-    })
     public ResponseEntity addDevice(Long userId, final DeviceDto deviceDto) {
-        return deviceService.addDevice(userId, deviceDto)
-                ? ResponseEntity.ok().build()
-                : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok(deviceService.addDevice(userId, deviceDto));
     }
 
     @Override
     @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
-            UniqueDeviceAlreadyExistsException.class
+            DeviceNotFoundException.class
     })
     public ResponseEntity getDeviceByDeviceId(String deviceId) {
         return ResponseEntity.ok(deviceService.getDeviceByDeviceId(deviceId));
@@ -48,7 +43,7 @@ public class DeviceControllerImpl implements DeviceController {
 
     @Override
     @HystrixCommand(commandKey = "basic", fallbackMethod = "fallback", ignoreExceptions = {
-            UniqueDeviceAlreadyExistsException.class
+            DeviceNotFoundException.class
     })
     public ResponseEntity getDeviceById(Long deviceId) {
         return ResponseEntity.ok(deviceService.getDeviceById(deviceId));
@@ -86,6 +81,10 @@ public class DeviceControllerImpl implements DeviceController {
     }
 
     private ResponseEntity fallback(Long f) {
+        return this.defaultFallback();
+    }
+
+    private ResponseEntity fallback(Long f, DeviceDto deviceDto) {
         return this.defaultFallback();
     }
 

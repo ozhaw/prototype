@@ -6,6 +6,7 @@ public class NotifDataDto implements Mappable {
     private String time;
     private String severity;
     private String advice;
+    private String type;
 
     public String getTime() {
         return time;
@@ -29,5 +30,13 @@ public class NotifDataDto implements Mappable {
 
     public void setAdvice(String advice) {
         this.advice = advice;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

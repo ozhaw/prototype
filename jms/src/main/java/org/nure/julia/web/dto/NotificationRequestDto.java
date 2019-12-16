@@ -5,6 +5,7 @@ public class NotificationRequestDto {
     private String body;
     private String advice;
     private String severity;
+    private String type;
 
     public String getTitle() {
         return title;
@@ -36,5 +37,13 @@ public class NotificationRequestDto {
 
     public void setSeverity(String severity) {
         this.severity = severity;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

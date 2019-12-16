@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static java.util.Objects.isNull;
 
 @Service
 @Transactional
@@ -35,20 +32,17 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public boolean addDevice(Long userId, final DeviceDto deviceDto) {
+    public DeviceDto addDevice(Long userId, final DeviceDto deviceDto) {
         if (deviceRepository.findByDeviceId(deviceDto.getDeviceId()).isPresent()) {
             throw new UniqueDeviceAlreadyExistsException("Device was already registered");
         }
 
-        Optional<WebUser> webUser = userRepository.findById(userId);
-        if (webUser.isPresent()) {
-            Device device = deviceDtoDeviceBasicMapper.map(deviceDto);
-            device.setWebUser(webUser.get());
+        WebUser webUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User was not found"));
+        Device device = deviceDtoDeviceBasicMapper.map(deviceDto);
+        device.setWebUser(webUser);
 
-            return !isNull(deviceRepository.save(device).getId());
-        }
-
-        return false;
+        return deviceDtoDeviceBasicMapper.reversalMap(deviceRepository.save(device));
     }
 
     @Override

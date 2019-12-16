@@ -7,7 +7,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.Ordered;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -64,6 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Profile("deploy")
     public FilterRegistrationBean securityFilterRegistration() {
         FilterRegistrationBean<SecurityWebFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new SecurityWebFilter(authenticationServiceURL()));
