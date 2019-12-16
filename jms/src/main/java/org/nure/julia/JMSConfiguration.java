@@ -11,7 +11,7 @@ public class JMSConfiguration {
     @Bean
     public BrokerService broker() throws Exception {
         BrokerService broker = new BrokerService();
-        broker.addConnector("tcp://localhost:61616");
+        broker.addConnector("tcp://localhost:61698");
         broker.setPersistent(false);
         broker.setUseJmx(true);
         return broker;
