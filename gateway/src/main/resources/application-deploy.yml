@@ -3,7 +3,7 @@ eureka:
     serviceUrl:
       defaultZone: http://35.189.244.115:8010/eureka
 server:
-  port: 8012
+  port: 8080
 spring:
     application:
         name: gateway-service

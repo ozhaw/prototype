@@ -6,9 +6,9 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://julia-eureka-service.herokuapp.com/eureka
+      defaultZone: http://35.189.244.115:8010/eureka
 server:
-  port: ${PORT:8080}
+  port: 8012
 sessions:
   security:
     tokenKey: Bearer
