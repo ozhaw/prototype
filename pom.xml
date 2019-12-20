@@ -9,16 +9,16 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>swagger</module>
+        <module>security</module>
+        <module>database</module>
+        <module>hystrix-configuration</module>
+        <module>hystrix-dashboard</module>
         <module>gateway</module>
         <module>eureka-service</module>
         <module>user-service</module>
         <module>authentication</module>
-        <module>swagger</module>
-        <module>hystrix-configuration</module>
-        <module>hystrix-dashboard</module>
-        <module>database</module>
         <module>jms</module>
-        <module>security</module>
         <module>device-service</module>
         <module>reports-service</module>
     </modules>
