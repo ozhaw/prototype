@@ -5,9 +5,9 @@ eureka:
     fetchRegistry: false
     registerWithEureka: false
     serviceUrl:
-      defaultZone: https://julia-eureka-service.herokuapp.com/eureka
+      defaultZone: https://localhost:8080/eureka
 server:
-  port: ${PORT:8080}
+  port: 8080
 spring:
   application:
     name: eureka-service
