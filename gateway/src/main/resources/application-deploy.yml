@@ -1,9 +1,9 @@
 eureka:
-    client:
-        serviceUrl:
-            defaultZone: https://julia-eureka-service.herokuapp.com/eureka
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka
 server:
-  port: ${PORT:8080}
+  port: 8010
 spring:
     application:
         name: gateway-service

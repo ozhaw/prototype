@@ -1,4 +1,7 @@
 eureka:
+  client:
+    serviceUrl:
+      defaultZone: https://julia-eureka-service.herokuapp.com/eureka
   instance:
     hostname: ${DOMAIN_NAME}
     non-secure-port-enabled: false
