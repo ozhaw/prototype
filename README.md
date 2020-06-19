@@ -1,1 +1,1 @@
-# prototype
+# RestServices Application for a university project
