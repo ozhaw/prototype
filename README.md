@@ -1,1 +1,1 @@
-# RestServices Application for a university project
+# RestServices Application for an internal project
